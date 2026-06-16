@@ -1,11 +1,802 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=demo/index.html">
-<title>Survie Madagascar</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours de Chant Rapide</title>
+    <meta name="description" content="Formations vocales professionnelles : vidéo, PDF et exercices vocaux. Devenez revendeur et gagnez 1500 Ar par vente.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #6c3de8;
+            --secondary: #f0a500;
+            --dark: #0f0a1e;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--dark); color: #fff; overflow-x: hidden; }
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(15,10,30,0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(108,61,232,0.3);
+            padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg,#6c3de8,#f0a500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { color: #ccc; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--secondary); }
+        .btn-nav { background: linear-gradient(135deg,#6c3de8,#9b5de5); color: white !important; padding: 0.5rem 1.2rem; border-radius: 25px; font-weight: 600; }
+        .hamburger { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 6rem 2rem 4rem;
+            background: radial-gradient(ellipse at center, rgba(108,61,232,0.15) 0%, transparent 70%);
+            position: relative;
+        }
+        .hero::before {
+            content: ''; position: absolute; width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(108,61,232,0.08), transparent);
+            border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%,-50%) scale(1.1); opacity: 1; }
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-badge { display: inline-block; background: rgba(108,61,232,0.2); border: 1px solid rgba(108,61,232,0.5); color: #a78bfa; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; margin-bottom: 1.5rem; }
+        .hero h1 { font-size: clamp(2.2rem,6vw,4.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero h1 span { background: linear-gradient(135deg,#6c3de8,#f0a500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.1rem; color: #9ca3af; max-width: 580px; margin: 0 auto 2.5rem; line-height: 1.7; }
+        .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn-primary { background: linear-gradient(135deg,#6c3de8,#9b5de5); color: white; padding: 1rem 2.5rem; border-radius: 50px; font-size: 1rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(108,61,232,0.4); }
+        .btn-outline { background: transparent; color: white; padding: 1rem 2.5rem; border-radius: 50px; font-size: 1rem; font-weight: 600; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
+        .btn-outline:hover { border-color: var(--secondary); color: var(--secondary); }
+        .hero-stats { display: flex; gap: 3rem; justify-content: center; margin-top: 4rem; flex-wrap: wrap; }
+        .stat { text-align: center; }
+        .stat-number { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg,#6c3de8,#f0a500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { color: #6b7280; font-size: 0.85rem; }
+        section { padding: 5rem 2rem; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-badge { display: inline-block; background: rgba(108,61,232,0.15); border: 1px solid rgba(108,61,232,0.3); color: #a78bfa; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; margin-bottom: 1rem; }
+        .section-header h2 { font-size: clamp(1.8rem,4vw,2.8rem); font-weight: 800; margin-bottom: 1rem; }
+        .section-header p { color: #6b7280; max-width: 500px; margin: 0 auto; line-height: 1.6; }
+        #produits { background: rgba(108,61,232,0.03); }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+        .product-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden; }
+        .product-card:hover { transform: translateY(-8px); border-color: rgba(108,61,232,0.4); box-shadow: 0 20px 60px rgba(108,61,232,0.15); }
+        .product-card.featured { border-color: rgba(240,165,0,0.4); background: rgba(240,165,0,0.05); }
+        .product-card.featured::before { content: '⭐ Populaire'; position: absolute; top: 1rem; right: 1rem; background: var(--secondary); color: #000; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+        .product-icon { width: 60px; height: 60px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 1.5rem; }
+        .product-icon.video { background: rgba(108,61,232,0.2); }
+        .product-icon.pdf { background: rgba(239,68,68,0.2); }
+        .product-icon.vocal { background: rgba(16,185,129,0.2); }
+        .product-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem; }
+        .product-card > p { color: #6b7280; font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem; }
+        .product-features { list-style: none; margin-bottom: 1.5rem; }
+        .product-features li { color: #9ca3af; font-size: 0.85rem; padding: 0.3rem 0; display: flex; align-items: center; gap: 0.5rem; }
+        .product-features li::before { content: '✓'; color: var(--success); font-weight: 700; }
+        .product-price { font-size: 2rem; font-weight: 900; color: var(--secondary); margin-bottom: 1rem; }
+        .product-price span { font-size: 0.9rem; color: #6b7280; font-weight: 400; }
+        .btn-order { width: 100%; background: linear-gradient(135deg,#6c3de8,#9b5de5); color: white; padding: 0.9rem; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; transition: all 0.3s; font-size: 1rem; }
+        .btn-order:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(108,61,232,0.4); }
+        .btn-order:disabled { opacity: 0.6; cursor: not-allowed; }
+        #commander { background: linear-gradient(180deg, transparent, rgba(108,61,232,0.05), transparent); }
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto 3rem; }
+        .step-card { text-align: center; padding: 1.5rem 1rem; }
+        .step-number { width: 50px; height: 50px; background: linear-gradient(135deg,#6c3de8,#9b5de5); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; margin: 0 auto 1rem; }
+        .step-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+        .step-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .step-card p { color: #6b7280; font-size: 0.85rem; }
+        .payment-boxes { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; max-width: 700px; margin: 0 auto; }
+        .payment-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 1.5rem 2rem; text-align: center; flex: 1; min-width: 200px; }
+        .payment-box .pay-logo { font-size: 2rem; margin-bottom: 0.5rem; }
+        .payment-box h4 { font-weight: 700; margin-bottom: 0.4rem; }
+        .pay-number { color: var(--secondary); font-size: 1.2rem; font-weight: 800; }
+        #revendeur { background: radial-gradient(ellipse at center, rgba(240,165,0,0.05) 0%, transparent 70%); }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 1.5rem; max-width: 900px; margin: 0 auto 3rem; }
+        .benefit-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 15px; padding: 1.5rem; text-align: center; }
+        .benefit-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+        .benefit-card h4 { font-weight: 700; margin-bottom: 0.4rem; }
+        .benefit-card p { color: #6b7280; font-size: 0.85rem; }
+        .form-container { max-width: 480px; margin: 0 auto; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 2rem; }
+        .tabs { display: flex; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+        .tab-btn { flex: 1; padding: 0.8rem; background: transparent; border: none; color: #6b7280; font-size: 0.9rem; cursor: pointer; transition: all 0.3s; }
+        .tab-btn.active { background: var(--primary); color: white; font-weight: 700; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 0.85rem; color: #9ca3af; margin-bottom: 0.4rem; }
+        .form-group input, .form-group select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 0.8rem 1rem; border-radius: 10px; font-size: 0.95rem; outline: none; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+        .form-group select option { background: #1a1030; }
+        .form-group input::placeholder { color: #4b5563; }
+        #dashboard { display: none; }
+        #dashboard.active { display: block; }
+        .dash-container { max-width: 820px; margin: 0 auto; }
+        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+        .dash-welcome { font-size: 1.4rem; font-weight: 700; }
+        .btn-logout { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #ef4444; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem; }
+        .stats-cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .stats-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 15px; padding: 1.5rem; }
+        .stats-card.gold { border-color: rgba(240,165,0,0.4); background: rgba(240,165,0,0.05); }
+        .stats-label { color: #6b7280; font-size: 0.8rem; margin-bottom: 0.5rem; }
+        .stats-value { font-size: 1.8rem; font-weight: 800; color: var(--secondary); }
+        .stats-value.green { color: var(--success); }
+        .referral-box { background: rgba(108,61,232,0.1); border: 1px solid rgba(108,61,232,0.3); border-radius: 15px; padding: 1.5rem; margin-bottom: 2rem; }
+        .referral-box h4 { font-weight: 700; margin-bottom: 0.5rem; }
+        .referral-box p { color: #6b7280; font-size: 0.85rem; margin-bottom: 1rem; }
+        .link-row { display: flex; gap: 0.5rem; }
+        .link-row input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: #a78bfa; padding: 0.8rem 1rem; border-radius: 10px; font-size: 0.8rem; outline: none; }
+        .btn-copy { background: var(--primary); color: white; border: none; padding: 0.8rem 1rem; border-radius: 10px; cursor: pointer; font-size: 0.85rem; white-space: nowrap; }
+        .ventes-section h4 { font-weight: 700; margin-bottom: 1rem; }
+        .ventes-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        .ventes-table th { text-align: left; padding: 0.8rem; color: #6b7280; font-size: 0.78rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .ventes-table td { padding: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .badge { padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+        .badge-ok { background: rgba(16,185,129,0.2); color: #10b981; }
+        .badge-wait { background: rgba(245,158,11,0.2); color: #f59e0b; }
+        .empty-state { text-align: center; color: #6b7280; padding: 2rem; font-size: 0.9rem; }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: #1a1030; border: 1px solid rgba(108,61,232,0.3); border-radius: 20px; padding: 2rem; width: 100%; max-width: 480px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #6b7280; font-size: 1.5rem; cursor: pointer; }
+        .modal h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .modal-price { color: var(--secondary); font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; }
+        .pay-instructions { background: rgba(108,61,232,0.1); border: 1px solid rgba(108,61,232,0.3); border-radius: 12px; padding: 1rem; margin: 1rem 0; font-size: 0.9rem; line-height: 1.8; display: none; }
+        .toast { position: fixed; bottom: 2rem; right: 2rem; background: #1a1030; border: 1px solid rgba(108,61,232,0.4); color: white; padding: 1rem 1.5rem; border-radius: 12px; z-index: 3000; transform: translateY(100px); opacity: 0; transition: all 0.3s; font-size: 0.9rem; max-width: 300px; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.ok { border-color: rgba(16,185,129,0.5); }
+        .toast.err { border-color: rgba(239,68,68,0.5); }
+        footer { background: rgba(0,0,0,0.5); border-top: 1px solid rgba(255,255,255,0.05); padding: 3rem 2rem; text-align: center; }
+        .footer-logo { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg,#6c3de8,#f0a500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        footer p { color: #4b5563; font-size: 0.85rem; margin-bottom: 0.3rem; }
+        .spin { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: rot 0.8s linear infinite; vertical-align: middle; margin-right: 6px; }
+        @keyframes rot { to { transform: rotate(360deg); } }
+        .wa-float { position: fixed; bottom: 2rem; left: 2rem; width: 55px; height: 55px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none; z-index: 1000; box-shadow: 0 5px 20px rgba(37,211,102,0.4); transition: transform 0.3s; }
+        .wa-float:hover { transform: scale(1.1); }
+        @media (max-width: 768px) {
+            nav { padding: 1rem; }
+            .nav-links { display: none; position: absolute; top: 65px; left: 0; right: 0; background: rgba(15,10,30,0.98); flex-direction: column; padding: 1rem 2rem; gap: 1rem; border-bottom: 1px solid rgba(108,61,232,0.3); }
+            .nav-links.open { display: flex; }
+            .hamburger { display: block; }
+            .hero { padding: 5rem 1rem 3rem; }
+            .hero-stats { gap: 1.5rem; }
+        }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+    </style>
 </head>
 <body>
-<script>window.location="demo/index.html";</script>
+
+<nav>
+    <div class="logo">🎵 Chant Rapide</div>
+    <ul class="nav-links" id="nav-links">
+        <li><a href="#produits" onclick="closeMenu()">Formations</a></li>
+        <li><a href="#commander" onclick="closeMenu()">Commander</a></li>
+        <li><a href="#revendeur" onclick="closeMenu()">Revendeur</a></li>
+        <li><a href="#revendeur" class="btn-nav" onclick="closeMenu()">Mon espace</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">🎤 Formation vocale professionnelle</div>
+        <h1>Apprenez à chanter<br><span>rapidement &amp; facilement</span></h1>
+        <p>Des cours de chant complets en vidéo, PDF et exercices vocaux pour développer votre voix dès aujourd'hui — livraison rapide après paiement.</p>
+        <div class="hero-btns">
+            <a href="#gate-msg" class="btn-primary">Créer mon compte gratuitement</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat"><div class="stat-number">500+</div><div class="stat-label">Élèves formés</div></div>
+            <div class="stat"><div class="stat-number">3</div><div class="stat-label">Formats disponibles</div></div>
+            <div class="stat"><div class="stat-number">1 500 Ar</div><div class="stat-label">Commission / vente</div></div>
+        </div>
+    </div>
+</section>
+
+<section id="gate-msg" style="text-align:center;padding:2rem 1.5rem">
+    <div class="section-badge" style="margin:0 auto 1rem">🔒 Accès réservé</div>
+    <h2 style="margin-bottom:0.5rem">Créez un compte pour continuer</h2>
+    <p style="color:#aaa;margin-bottom:2rem">Choisissez votre profil pour commencer</p>
+    <div style="display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;max-width:600px;margin:0 auto">
+        <button type="button" onclick="chooseType('eleve')" style="flex:1;min-width:220px;background:rgba(108,61,232,0.1);border:2px solid rgba(108,61,232,0.4);border-radius:16px;padding:2rem 1.5rem;color:#fff;cursor:pointer;font-size:1.05rem;font-weight:700">
+            <div style="font-size:2.5rem;margin-bottom:0.8rem">🎓</div>
+            Je suis Élève
+        </button>
+        <button type="button" onclick="chooseType('revendeur')" style="flex:1;min-width:220px;background:rgba(240,165,0,0.1);border:2px solid rgba(240,165,0,0.4);border-radius:16px;padding:2rem 1.5rem;color:#fff;cursor:pointer;font-size:1.05rem;font-weight:700">
+            <div style="font-size:2.5rem;margin-bottom:0.8rem">💼</div>
+            Je suis Revendeur
+        </button>
+    </div>
+</section>
+
+<section id="produits" style="display:none">
+    <div class="section-header">
+        <div class="section-badge">📚 Nos formations</div>
+        <h2>Choisissez votre <span style="color:#a78bfa">formation</span></h2>
+        <p>Des ressources adaptées à tous les niveaux pour progresser rapidement dans le chant</p>
+    </div>
+    <div class="products-grid">
+        <div class="product-card featured">
+            <div class="product-icon video">🎬</div>
+            <h3>Cours en Vidéo</h3>
+            <p>Cours complets filmés avec démonstrations pratiques et exercices guidés pas à pas.</p>
+            <ul class="product-features">
+                <li>Techniques de respiration</li>
+                <li>Placement de la voix</li>
+                <li>Gammes et vocalises</li>
+                <li>Chansons complètes apprises</li>
+                <li>Accès immédiat après paiement</li>
+            </ul>
+            <div class="product-price">15 000 Ar <span>/ accès complet</span></div>
+            <button class="btn-order" onclick="openOrder('video','Cours en Vidéo',15000)">Commander maintenant</button>
+        </div>
+        <div class="product-card">
+            <div class="product-icon pdf">📄</div>
+            <h3>Cours en PDF</h3>
+            <p>Guide complet avec illustrations, exercices écrits et partitions pour chanter juste.</p>
+            <ul class="product-features">
+                <li>Guide illustré complet</li>
+                <li>Partitions incluses</li>
+                <li>Exercices imprimables</li>
+                <li>Théorie musicale simplifiée</li>
+                <li>Téléchargement immédiat</li>
+            </ul>
+            <div class="product-price">12 000 Ar <span>/ PDF complet</span></div>
+            <button class="btn-order" onclick="openOrder('pdf','Cours en PDF',12000)">Commander maintenant</button>
+        </div>
+        <div class="product-card">
+            <div class="product-icon vocal">🎙️</div>
+            <h3>Exercices Vocaux</h3>
+            <p>Programme audio de vocalises progressives pour renforcer et développer votre voix.</p>
+            <ul class="product-features">
+                <li>Vocalises progressives</li>
+                <li>Extension de la tessiture</li>
+                <li>Puissance et endurance vocale</li>
+                <li>Justesse et intonation</li>
+                <li>Fichiers audio inclus</li>
+            </ul>
+            <div class="product-price">15 000 Ar <span>/ programme complet</span></div>
+            <button class="btn-order" onclick="openOrder('exercice','Exercices Vocaux',15000)">Commander maintenant</button>
+        </div>
+    </div>
+</section>
+
+<section id="commander" style="display:none">
+    <div class="section-header">
+        <div class="section-badge">📋 Comment commander</div>
+        <h2>Simple &amp; <span style="color:#a78bfa">rapide</span></h2>
+        <p>Recevez votre formation rapidement après confirmation du paiement</p>
+    </div>
+    <div class="steps-grid">
+        <div class="step-card"><div class="step-number">1</div><div class="step-icon">🛒</div><h3>Choisissez</h3><p>Sélectionnez la formation et cliquez sur Commander</p></div>
+        <div class="step-card"><div class="step-number">2</div><div class="step-icon">💸</div><h3>Payez</h3><p>Envoyez le montant via MVola ou Orange Money</p></div>
+        <div class="step-card"><div class="step-number">3</div><div class="step-icon">📱</div><h3>Confirmez</h3><p>Envoyez la capture de paiement par WhatsApp</p></div>
+        <div class="step-card"><div class="step-number">4</div><div class="step-icon">🎓</div><h3>Recevez</h3><p>Votre formation est envoyée par WhatsApp rapidement</p></div>
+    </div>
+    <div class="payment-boxes">
+        <div class="payment-box"><div class="pay-logo">📲</div><h4>MVola</h4><div class="pay-number">0381821125</div></div>
+        <div class="payment-box"><div class="pay-logo">🟠</div><h4>Orange Money</h4><div class="pay-number">0322217709</div></div>
+    </div>
+</section>
+
+<section id="revendeur" style="display:none">
+    <div class="section-header" id="revendeur-intro" style="display:none">
+        <div class="section-badge">💼 Programme Revendeur</div>
+        <h2>Gagnez <span style="color:#f0a500">1 500 Ar</span> par vente</h2>
+        <p>Inscrivez-vous gratuitement, partagez votre lien et gagnez des commissions automatiques à chaque client</p>
+    </div>
+    <div class="benefits-grid" id="revendeur-benefits" style="display:none">
+        <div class="benefit-card"><div class="benefit-icon">💰</div><h4>1 500 Ar / vente</h4><p>Commission créditée automatiquement sur votre compte à chaque vente</p></div>
+        <div class="benefit-card"><div class="benefit-icon">🔗</div><h4>Lien unique</h4><p>Votre lien personnalisé pour suivre et référer vos clients</p></div>
+        <div class="benefit-card"><div class="benefit-icon">📊</div><h4>Dashboard live</h4><p>Suivi en temps réel de votre solde, ventes et historique</p></div>
+        <div class="benefit-card"><div class="benefit-icon">⚡</div><h4>Inscription gratuite</h4><p>Aucun investissement requis — commencez à gagner immédiatement</p></div>
+    </div>
+    <div class="form-container" id="rev-form-wrap" style="display:none">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('ins')">S'inscrire</button>
+            <button class="tab-btn" onclick="switchTab('con')">Se connecter</button>
+        </div>
+        <button type="button" onclick="loginWithGoogle()" id="btn-google" style="width:100%;margin-bottom:1rem;padding:0.8rem;border-radius:8px;border:1px solid #444;background:#1a1a2e;color:#fff;display:flex;align-items:center;justify-content:center;gap:0.6rem;cursor:pointer;font-weight:600">
+            <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84c-.21 1.13-.85 2.08-1.81 2.72v2.26h2.92c1.71-1.57 2.69-3.88 2.69-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.71H.96v2.33C2.44 15.98 5.48 18 9 18z"/><path fill="#FBBC05" d="M3.97 10.71c-.18-.54-.28-1.11-.28-1.71s.1-1.17.28-1.71V4.96H.96C.35 6.18 0 7.55 0 9s.35 2.82.96 4.04l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.96l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>
+            Continuer avec Google
+        </button>
+        <div style="text-align:center;color:#888;margin-bottom:1rem;font-size:0.85rem">— ou —</div>
+        <div id="tab-ins">
+            <form onsubmit="inscrire(event)">
+                <div class="form-group" style="display:none">
+                    <label>Type de compte</label>
+                    <select id="r-type" required onchange="toggleCompteType()">
+                        <option value="">-- Choisissez --</option>
+                        <option value="eleve">🎓 Élève</option>
+                        <option value="revendeur">💼 Revendeur</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Nom complet</label><input type="text" id="r-nom" placeholder="Votre nom" required></div>
+                <div class="form-group"><label>Numéro de téléphone</label><input type="tel" id="r-tel" placeholder="034 XX XXX XX" required></div>
+                <div class="form-group"><label>Mot de passe (min. 6 caractères)</label><input type="password" id="r-pass" placeholder="••••••" required minlength="6"></div>
+                <div class="form-group" id="r-pay-wrap" style="display:none"><label>Numéro MVola/Orange Money (pour recevoir vos gains)</label><input type="tel" id="r-pay" placeholder="Numéro de paiement"></div>
+                <button type="submit" class="btn-order" style="margin-top:1rem" id="btn-ins">Créer mon compte</button>
+            </form>
+        </div>
+        <div id="tab-con" style="display:none">
+            <form onsubmit="connecter(event)">
+                <div class="form-group"><label>Numéro de téléphone</label><input type="tel" id="l-tel" placeholder="034 XX XXX XX" required></div>
+                <div class="form-group"><label>Mot de passe</label><input type="password" id="l-pass" placeholder="••••••" required></div>
+                <button type="submit" class="btn-order" style="margin-top:1rem" id="btn-con">Se connecter</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section id="dashboard">
+    <div class="section-header">
+        <div class="section-badge">📊 Mon Espace Revendeur</div>
+        <h2>Tableau de <span style="color:#a78bfa">bord</span></h2>
+    </div>
+    <div class="dash-container">
+        <div class="dash-header">
+            <div class="dash-welcome">👋 Bonjour, <span id="d-nom" style="color:#a78bfa"></span> !</div>
+            <button class="btn-logout" onclick="logout()">Se déconnecter</button>
+        </div>
+        <div class="stats-cards">
+            <div class="stats-card gold"><div class="stats-label">💰 Solde disponible</div><div class="stats-value" id="d-solde">0 Ar</div></div>
+            <div class="stats-card"><div class="stats-label">🛒 Total ventes</div><div class="stats-value green" id="d-ventes">0</div></div>
+            <div class="stats-card"><div class="stats-label">📈 Gains totaux</div><div class="stats-value" id="d-gains">0 Ar</div></div>
+        </div>
+        <div class="referral-box">
+            <h4>🔗 Votre lien de parrainage</h4>
+            <p>Partagez ce lien — chaque vente via votre lien vous rapporte <strong>1 500 Ar</strong> automatiquement</p>
+            <div class="link-row">
+                <input type="text" id="ref-link" readonly>
+                <button class="btn-copy" onclick="copyLink()">📋 Copier</button>
+            </div>
+        </div>
+        <div class="ventes-section">
+            <h4>📋 Historique de mes ventes</h4>
+            <div id="ventes-list"><div class="empty-state">Aucune vente pour le moment</div></div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-logo">🎵 Cours de Chant Rapide</div>
+    <p>Formations vocales professionnelles • Madagascar</p>
+    <p>© 2025 Tous droits réservés</p>
+</footer>
+
+<div class="modal-overlay" id="order-modal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <h3 id="m-title"></h3>
+        <div class="modal-price" id="m-price"></div>
+        <form onsubmit="submitOrder(event)">
+            <div class="form-group"><label>Votre nom complet</label><input type="text" id="o-nom" placeholder="Nom et prénom" required></div>
+            <div class="form-group"><label>Votre numéro WhatsApp</label><input type="tel" id="o-tel" placeholder="034 XX XXX XX" required></div>
+            <div class="form-group">
+                <label>Mode de paiement</label>
+                <select id="o-pay" required onchange="showPayInfo()">
+                    <option value="">-- Choisissez --</option>
+                    <option value="mvola">MVola</option>
+                    <option value="orange">Orange Money</option>
+                </select>
+            </div>
+            <div class="pay-instructions" id="pay-info"></div>
+            <div class="form-group"><label>Code revendeur (optionnel)</label><input type="text" id="o-code" placeholder="Si vous avez un code" style="text-transform:uppercase"></div>
+            <button type="submit" class="btn-order" id="btn-order" style="margin-top:0.5rem">✅ Confirmer ma commande</button>
+        </form>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<a href="https://wa.me/261322217709" class="wa-float" target="_blank">💬</a>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc, updateDoc, query, where, increment } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+
+const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyBIVvflhCXSn_Kw68DLSCcO4mSm-P2FY60",
+    authDomain: "cours-de-chant-rapide-dc208.firebaseapp.com",
+    projectId: "cours-de-chant-rapide-dc208",
+    storageBucket: "cours-de-chant-rapide-dc208.firebasestorage.app",
+    messagingSenderId: "910723164088",
+    appId: "1:910723164088:web:bb502ef8843b52c31a114d"
+};
+
+const app = initializeApp(FIREBASE_CONFIG);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+
+const MVOLA  = "0381821125";
+const OM     = "0322217709";
+const WA_NUM = "261322217709";
+
+let ORDER = {};
+let ME = null;
+
+window.unlockApp = () => {
+    localStorage.setItem('cc_unlocked', '1');
+    document.getElementById('gate-msg').style.display = 'none';
+    document.getElementById('produits').style.display = 'block';
+    document.getElementById('commander').style.display = 'block';
+};
+
+if (localStorage.getItem('cc_unlocked') === '1') {
+    document.addEventListener('DOMContentLoaded', unlockApp);
+}
+
+window.openOrder = (type, title, price) => {
+    ORDER = { type, title, price };
+    document.getElementById('m-title').textContent = title;
+    document.getElementById('m-price').textContent = price.toLocaleString('fr') + ' Ar';
+    const params = new URLSearchParams(location.search);
+    const ref = params.get('ref');
+    if (ref) document.getElementById('o-code').value = ref.toUpperCase();
+    document.getElementById('order-modal').classList.add('active');
+};
+
+window.closeModal = () => {
+    document.getElementById('order-modal').classList.remove('active');
+    document.getElementById('o-pay').value = '';
+    document.getElementById('pay-info').style.display = 'none';
+};
+
+window.showPayInfo = () => {
+    const v = document.getElementById('o-pay').value;
+    const el = document.getElementById('pay-info');
+    if (v === 'mvola') {
+        el.innerHTML = `📲 <strong>MVola</strong> — Envoyez <strong>${ORDER.price?.toLocaleString('fr')} Ar</strong> au :<br><span style="color:#f0a500;font-size:1.2rem;font-weight:800">${MVOLA}</span><br><small>Ensuite envoyez la capture par WhatsApp ✅</small>`;
+        el.style.display = 'block';
+    } else if (v === 'orange') {
+        el.innerHTML = `🟠 <strong>Orange Money</strong> — Envoyez <strong>${ORDER.price?.toLocaleString('fr')} Ar</strong> au :<br><span style="color:#f0a500;font-size:1.2rem;font-weight:800">${OM}</span><br><small>Ensuite envoyez la capture par WhatsApp ✅</small>`;
+        el.style.display = 'block';
+    } else {
+        el.style.display = 'none';
+    }
+};
+
+window.submitOrder = async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('btn-order');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spin"></span> Envoi...';
+    try {
+        const nom = document.getElementById('o-nom').value.trim();
+        const tel = document.getElementById('o-tel').value.trim();
+        const paiement = document.getElementById('o-pay').value;
+        const code = document.getElementById('o-code').value.trim().toUpperCase();
+
+        let revendeurId = null;
+        if (code) {
+            const q = query(collection(db, 'revendeurs'), where('code', '==', code));
+            const snap = await getDocs(q);
+            if (!snap.empty) revendeurId = snap.docs[0].id;
+        }
+
+        await addDoc(collection(db, 'commandes'), {
+            produit: ORDER.type,
+            titre: ORDER.title,
+            montant: ORDER.price,
+            clientNom: nom,
+            clientTel: tel,
+            paiement,
+            codeRevendeur: code || null,
+            revendeurId,
+            statut: 'en_attente',
+            date: new Date().toISOString(),
+            commission: 1500
+        });
+
+        if (revendeurId) {
+            await updateDoc(doc(db, 'revendeurs', revendeurId), {
+                solde: increment(1500),
+                totalVentes: increment(1),
+                totalGains: increment(1500)
+            });
+        }
+
+        const msg = encodeURIComponent(`Bonjour, je viens de commander "${ORDER.title}" (${ORDER.price.toLocaleString('fr')} Ar) via ${paiement === 'mvola' ? 'MVola' : 'Orange Money'}. Nom : ${nom}. Voici ma preuve de paiement :`);
+        window.open(`https://wa.me/${WA_NUM}?text=${msg}`, '_blank');
+
+        toast('✅ Commande enregistrée ! Envoyez votre preuve de paiement sur WhatsApp.', 'ok');
+        setTimeout(closeModal, 2000);
+        e.target.reset();
+    } catch (err) {
+        console.error(err);
+        toast("❌ Erreur lors de l'enregistrement. Réessayez.", 'err');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '✅ Confirmer ma commande';
+    }
+};
+
+function genCode(nom, tel) {
+    return nom.replace(/\\s+/g, '').toUpperCase().slice(0, 4).padEnd(4, 'X') + tel.replace(/\\D/g, '').slice(-4);
+}
+
+window.switchTab = (tab) => {
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', (i === 0 && tab === 'ins') || (i === 1 && tab === 'con')));
+    document.getElementById('tab-ins').style.display = tab === 'ins' ? 'block' : 'none';
+    document.getElementById('tab-con').style.display = tab === 'con' ? 'block' : 'none';
+};
+
+window.toggleCompteType = () => {
+    const type = document.getElementById('r-type').value;
+    const payWrap = document.getElementById('r-pay-wrap');
+    const payInput = document.getElementById('r-pay');
+    if (type === 'revendeur') {
+        payWrap.style.display = 'block';
+        payInput.required = true;
+    } else {
+        payWrap.style.display = 'none';
+        payInput.required = false;
+    }
+};
+
+window.chooseType = (type) => {
+    document.getElementById('r-type').value = type;
+    toggleCompteType();
+    document.getElementById('gate-msg').style.display = 'none';
+    document.getElementById('revendeur').style.display = 'block';
+    document.getElementById('rev-form-wrap').style.display = 'block';
+    if (type === 'revendeur') {
+        document.getElementById('revendeur-intro').style.display = 'block';
+        document.getElementById('revendeur-benefits').style.display = 'grid';
+    }
+    document.getElementById('revendeur').scrollIntoView({ behavior: 'smooth' });
+};
+
+window.inscrire = async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('btn-ins');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spin"></span> Création...';
+    try {
+        const type = document.getElementById('r-type').value;
+        const nom = document.getElementById('r-nom').value.trim();
+        const telephone = document.getElementById('r-tel').value.trim();
+        const pass = document.getElementById('r-pass').value;
+
+        if (type === 'eleve') {
+            const q = query(collection(db, 'eleves'), where('telephone', '==', telephone));
+            const snap = await getDocs(q);
+            if (!snap.empty) {
+                toast('❌ Ce numéro est déjà inscrit.', 'err');
+                return;
+            }
+            await addDoc(collection(db, 'eleves'), {
+                nom, telephone,
+                password: btoa(pass),
+                dateInscription: new Date().toISOString()
+            });
+            toast('✅ Bienvenue ' + nom + ' ! Choisissez votre formation ci-dessous.', 'ok');
+            e.target.reset();
+            document.getElementById('r-pay-wrap').style.display = 'none';
+            unlockApp();
+            document.getElementById('produits').scrollIntoView({ behavior: 'smooth' });
+            return;
+        }
+
+        const numeroPayment = document.getElementById('r-pay').value.trim();
+        const q = query(collection(db, 'revendeurs'), where('telephone', '==', telephone));
+        const snap = await getDocs(q);
+        if (!snap.empty) {
+            toast('❌ Ce numéro est déjà inscrit. Connectez-vous.', 'err');
+            return;
+        }
+
+        const code = genCode(nom, telephone);
+        const docRef = await addDoc(collection(db, 'revendeurs'), {
+            nom, telephone,
+            password: btoa(pass),
+            numeroPayment,
+            code,
+            solde: 0,
+            totalVentes: 0,
+            totalGains: 0,
+            dateInscription: new Date().toISOString()
+        });
+
+        ME = { id: docRef.id, nom, telephone, numeroPayment, code, solde: 0, totalVentes: 0, totalGains: 0 };
+        toast('✅ Compte revendeur créé ! Votre code : ' + code, 'ok');
+        unlockApp();
+        showDash();
+        e.target.reset();
+    } catch (err) {
+        console.error(err);
+        toast("❌ Erreur lors de l'inscription. Réessayez.", 'err');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Créer mon compte';
+    }
+};
+
+window.loginWithGoogle = async () => {
+    const btn = document.getElementById('btn-google');
+    btn.disabled = true;
+    try {
+        await signInWithRedirect(auth, googleProvider);
+    } catch (err) {
+        console.error(err);
+        toast('❌ Erreur: ' + (err.code || err.message || err), 'err');
+        btn.disabled = false;
+    }
+};
+
+async function processGoogleUser(user) {
+    const btn = document.getElementById('btn-google');
+    try {
+        const email = user.email;
+        const nom = user.displayName || email;
+
+        let q = query(collection(db, 'revendeurs'), where('email', '==', email));
+        let snap = await getDocs(q);
+        if (!snap.empty) {
+            const d = snap.docs[0];
+            ME = { id: d.id, ...d.data() };
+            toast('✅ Connexion réussie, ' + nom + ' !', 'ok');
+            unlockApp();
+            showDash();
+            return;
+        }
+
+        q = query(collection(db, 'eleves'), where('email', '==', email));
+        snap = await getDocs(q);
+        if (!snap.empty) {
+            toast('✅ Bienvenue ' + nom + ' ! Choisissez votre formation ci-dessous.', 'ok');
+            unlockApp();
+            document.getElementById('produits').scrollIntoView({ behavior: 'smooth' });
+            return;
+        }
+
+        const veutRevendeur = confirm('Nouveau compte. Voulez-vous devenir Revendeur (gagner des commissions) ?\nOK = Revendeur, Annuler = Élève');
+
+        if (veutRevendeur) {
+            const numeroPayment = prompt('Numéro MVola/Orange Money pour recevoir vos gains :');
+            if (!numeroPayment) {
+                toast('❌ Numéro de paiement requis pour devenir revendeur.', 'err');
+                return;
+            }
+            const code = genCode(nom, email);
+            const docRef = await addDoc(collection(db, 'revendeurs'), {
+                nom, email,
+                telephone: user.phoneNumber || '',
+                numeroPayment,
+                code,
+                solde: 0,
+                totalVentes: 0,
+                totalGains: 0,
+                dateInscription: new Date().toISOString()
+            });
+            ME = { id: docRef.id, nom, email, numeroPayment, code, solde: 0, totalVentes: 0, totalGains: 0 };
+            toast('✅ Compte revendeur créé ! Votre code : ' + code, 'ok');
+            unlockApp();
+            showDash();
+        } else {
+            await addDoc(collection(db, 'eleves'), {
+                nom, email,
+                dateInscription: new Date().toISOString()
+            });
+            toast('✅ Bienvenue ' + nom + ' ! Choisissez votre formation ci-dessous.', 'ok');
+            unlockApp();
+            document.getElementById('produits').scrollIntoView({ behavior: 'smooth' });
+        }
+    } catch (err) {
+        console.error(err);
+        toast('❌ Connexion Google annulée ou échouée.', 'err');
+    } finally {
+        if (btn) btn.disabled = false;
+    }
+}
+
+getRedirectResult(auth).then((result) => {
+    if (result && result.user) {
+        processGoogleUser(result.user);
+    }
+}).catch((err) => {
+    console.error(err);
+    toast('❌ Erreur: ' + (err.code || err.message || err), 'err');
+});
+
+window.connecter = async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('btn-con');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spin"></span> Connexion...';
+    try {
+        const telephone = document.getElementById('l-tel').value.trim();
+        const pass = document.getElementById('l-pass').value;
+
+        const q = query(collection(db, 'revendeurs'), where('telephone', '==', telephone));
+        const snap = await getDocs(q);
+        if (snap.empty) {
+            toast('❌ Numéro non inscrit.', 'err');
+            return;
+        }
+        const d = snap.docs[0];
+        const data = d.data();
+        if (atob(data.password) !== pass) {
+            toast('❌ Mot de passe incorrect.', 'err');
+            return;
+        }
+        ME = { id: d.id, ...data };
+        toast('✅ Connexion réussie !', 'ok');
+        unlockApp();
+        showDash();
+        e.target.reset();
+    } catch (err) {
+        console.error(err);
+        toast('❌ Erreur de connexion. Réessayez.', 'err');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Se connecter';
+    }
+};
+
+window.logout = () => {
+    ME = null;
+    document.getElementById('dashboard').classList.remove('active');
+    document.getElementById('rev-form-wrap').style.display = 'block';
+    document.querySelector('#revendeur .benefits-grid').style.display = 'grid';
+};
+
+async function showDash() {
+    if (!ME) return;
+    const fresh = await getDoc(doc(db, 'revendeurs', ME.id));
+    if (fresh.exists()) ME = { id: ME.id, ...fresh.data() };
+
+    document.getElementById('rev-form-wrap').style.display = 'none';
+    document.querySelector('#revendeur .benefits-grid').style.display = 'none';
+    document.getElementById('dashboard').classList.add('active');
+    document.getElementById('d-nom').textContent = ME.nom;
+    document.getElementById('d-solde').textContent = (ME.solde || 0).toLocaleString('fr') + ' Ar';
+    document.getElementById('d-ventes').textContent = ME.totalVentes || 0;
+    document.getElementById('d-gains').textContent = (ME.totalGains || 0).toLocaleString('fr') + ' Ar';
+    document.getElementById('ref-link').value = `${location.origin}${location.pathname}?ref=${ME.code}`;
+    loadVentes();
+    document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
+}
+
+async function loadVentes() {
+    const list = document.getElementById('ventes-list');
+    const q = query(collection(db, 'commandes'), where('codeRevendeur', '==', ME.code));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+        list.innerHTML = '<div class="empty-state">Aucune vente pour le moment</div>';
+        return;
+    }
+    let rows = '';
+    snap.forEach(d => {
+        const v = d.data();
+        rows += `<tr>
+            <td>${v.titre}</td>
+            <td>${(v.commission || 0).toLocaleString('fr')} Ar</td>
+            <td><span class="badge ${v.statut === 'confirme' ? 'badge-ok' : 'badge-wait'}">${v.statut === 'confirme' ? 'Confirmé' : 'En attente'}</span></td>
+        </tr>`;
+    });
+    list.innerHTML = `<table class="ventes-table"><thead><tr><th>Formation</th><th>Commission</th><th>Statut</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+window.copyLink = () => {
+    const input = document.getElementById('ref-link');
+    input.select();
+    navigator.clipboard.writeText(input.value);
+    toast('✅ Lien copié !', 'ok');
+};
+
+window.toggleMenu = () => document.getElementById('nav-links').classList.toggle('open');
+window.closeMenu = () => document.getElementById('nav-links').classList.remove('open');
+
+window.toast = (msg, type = '') => {
+    const el = document.getElementById('toast');
+    el.textContent = msg; el.className = `toast ${type} show`;
+    setTimeout(() => el.className = 'toast', 4000);
+};
+</script>
 </body>
 </html>
